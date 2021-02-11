@@ -1,0 +1,18 @@
+header {
+  background: blue;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  min-height: 8vh;
+  color: #fff;
+}
+
+.logo h1 {
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
