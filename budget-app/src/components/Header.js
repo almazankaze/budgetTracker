@@ -1,15 +1,12 @@
-import React from 'react';
-import AddBudget from './AddBudget';
-import './Header.css';
+import React from "react";
+import AddBudget from "./AddBudget";
+import "./Header.css";
 
 const Header = () => {
   return (
-    <header>
-      <div className="header-content">
-        <div className="logo">
-          <h1>Budget</h1>
-        </div>
-        <AddBudget />
+    <header className="header-content">
+      <div className="logo">
+        <h2>Budget</h2>
       </div>
     </header>
   );

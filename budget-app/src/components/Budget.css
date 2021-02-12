@@ -1,8 +1,49 @@
 .budget {
   background: #fff;
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s linear;
-  margin-top: 3.5rem;
+  margin: 0 0.5rem 2.5rem;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-row {
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.spent,
+.saved {
+  margin: 0;
+}
+
+.btn-icons {
+  font-size: 22px;
+  color: #c0cecb;
+  list-style: none;
+}
+
+.btn-icons li {
+  margin-left: 1rem;
+  display: inline;
+  float: left;
+  cursor: pointer;
+}
+
+.spend:hover {
+  color: #25b99a;
+}
+
+.edit:hover {
+  color: #e8cd56;
+}
+
+.remove:hover {
+  color: #e85656;
 }
