@@ -11,11 +11,37 @@ const initialState = {
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const add = (name, amount) => {
+    dispatch({ type: "ADD", payload: { name, amount } });
+  };
+
+  const remove = (id) => {
+    dispatch({ type: "REMOVE", payload: id });
+  };
+
+  const spend = (id, spent) => {
+    dispatch({ type: "SPEND", payload: { id, spent } });
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <AppContext.Provider
       value={{
         ...state,
+        isModalOpen,
+        add,
+        remove,
+        spend,
+        openModal,
+        closeModal,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import "./BudgetList.css";
 import { useGlobalContext } from "../context";
 
 const BudgetList = () => {
-  const { budgets, total } = useGlobalContext();
+  const { budgets, total, openModal } = useGlobalContext();
   return (
     <main className="budget-container">
       <div className="total-budget">
