@@ -7,20 +7,20 @@ import { VscEdit } from "react-icons/vsc";
 import { TiShoppingCart } from "react-icons/ti";
 
 const Budget = ({ id, name, amount, spent, saved, over, barColor }) => {
-  const { remove, spend } = useGlobalContext();
+  const { openModal } = useGlobalContext();
   return (
     <div className="budget">
       <div className="top-row">
         <h3 className="budget-name">{name}</h3>
 
         <ul className="btn-icons">
-          <li className="spend" onClick={() => spend(id, 1000)}>
+          <li className="spend" onClick={() => openModal("spend", id)}>
             <TiShoppingCart />
           </li>
-          <li className="edit">
+          <li className="edit" onClick={() => openModal("edit", id)}>
             <VscEdit />
           </li>
-          <li className="remove" onClick={() => remove(id)}>
+          <li className="remove" onClick={() => openModal("remove", id)}>
             <BsTrash />
           </li>
         </ul>

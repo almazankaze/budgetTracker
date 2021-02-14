@@ -7,7 +7,7 @@ const AddBudget = () => {
   const { add, openModal } = useGlobalContext();
   return (
     <div className="add-container">
-      <div className="add-btn" onClick={openModal}>
+      <div className="add-btn" onClick={() => openModal("add")}>
         <IoMdAdd size={24} className="fill" />
       </div>
       <div className="instructions">

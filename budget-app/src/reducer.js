@@ -10,7 +10,11 @@ const reducer = (state, action) => {
       barColor: "teal",
     };
 
-    return { ...state, budgets: [...state.budgets, newBudget] };
+    return {
+      ...state,
+      budgets: [...state.budgets, newBudget],
+      currentBudget: newBudget,
+    };
   }
 
   if (action.type === "REMOVE") {
@@ -34,6 +38,31 @@ const reducer = (state, action) => {
       return item;
     });
     return { ...state, budgets: tempBudgets };
+  }
+
+  if (action.type === "EDIT") {
+    let tmpBudgets = state.budgets.map((item) => {
+      return item.id == action.payload.id
+        ? {
+            ...item,
+            name: action.payload.name,
+            amount: action.payload.amount,
+            spent: 0,
+            saved: action.payload.amount,
+          }
+        : item;
+    });
+
+    return { ...state, budgets: tmpBudgets };
+  }
+
+  if (action.type === "EDITING") {
+    if (action.payload.type !== "add") {
+      let tmpBudget = state.budgets.find(
+        (item) => item.id == action.payload.id
+      );
+      return { ...state, currentBudget: tmpBudget };
+    }
   }
 
   return state;

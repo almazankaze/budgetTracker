@@ -1,13 +1,13 @@
-.total-budget,
 .budgets {
   width: 100%;
+  margin-top: 1.5rem;
 }
 
-@media screen and (min-width: 968px) {
-  .total-budget,
+@media screen and (min-width: 768px) {
   .budgets {
     width: 90vw;
     margin: 0 auto;
+    margin-top: 1.5rem;
     padding: 2.5rem, 0;
     max-width: 50rem;
   }
