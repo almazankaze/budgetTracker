@@ -14,6 +14,8 @@ const Modal = () => {
     spend,
     modalType,
     currentBudget,
+    isValid,
+    notifyBadInput,
   } = useGlobalContext();
 
   const [name, setName] = useState("");
@@ -34,12 +36,17 @@ const Modal = () => {
     }
 
     if (modalType === "add") {
-      add(name, amount);
-      cleanUp();
+      if (name && amount && !isNaN(amount)) {
+        add(name, amount);
+        cleanUp();
+      } else {
+        notifyBadInput();
+      }
     }
 
     if (modalType === "spend") {
-      if (!amount) {
+      if (!amount || isNaN(amount)) {
+        notifyBadInput();
       } else {
         spend(currentBudget.id, amount);
         cleanUp();
@@ -47,8 +54,20 @@ const Modal = () => {
     }
 
     if (modalType === "edit") {
-      edit(currentBudget.id, name, amount);
-      cleanUp();
+      if (!name) {
+        setName(currentBudget.name);
+      }
+
+      if (!amount) {
+        setAmount(currentBudget.amount);
+      }
+
+      if (name && amount && !isNaN(amount)) {
+        edit(currentBudget.id, name, amount);
+        cleanUp();
+      } else {
+        notifyBadInput();
+      }
     }
   };
 
@@ -69,6 +88,13 @@ const Modal = () => {
   } else if (modalType === "spend") {
     form = (
       <div className="form-control">
+        <span
+          className={`${
+            isValid ? "error-message" : "error-message show-error"
+          }`}
+        >
+          please enter a valid amount
+        </span>
         <input
           type="text"
           className="input-style"
@@ -84,17 +110,24 @@ const Modal = () => {
   } else {
     form = (
       <div className="form-control">
+        <span
+          className={`${
+            isValid ? "error-message" : "error-message show-error"
+          }`}
+        >
+          one or both fields are invalid
+        </span>
         <input
           type="text"
           className="input-style"
-          placeholder={name || "name for budget"}
+          placeholder={currentBudget.name || "name for budget"}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           type="text"
           className="input-style"
-          placeholder={amount || "starting amount"}
+          placeholder={currentBudget.amount || "starting amount"}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
@@ -112,7 +145,7 @@ const Modal = () => {
       }`}
     >
       <div className="modal-container">
-        <button className="close-modal-btn" onClick={closeModal}>
+        <button className="close-modal-btn" onClick={() => cleanUp()}>
           <FaTimes></FaTimes>
         </button>
         {form}

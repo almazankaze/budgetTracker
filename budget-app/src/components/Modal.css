@@ -68,6 +68,15 @@
   color: #fff;
 }
 
+.error-message {
+  display: none;
+  color: red;
+}
+
+.show-error {
+  display: block;
+}
+
 .modal-btn:hover {
   background: hsl(205, 78%, 60%);
 }

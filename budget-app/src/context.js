@@ -14,6 +14,7 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
   const add = (name, amount) => {
     dispatch({ type: "ADD", payload: { name, amount } });
@@ -38,6 +39,11 @@ const AppProvider = ({ children }) => {
   };
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsValid(true);
+  };
+
+  const notifyBadInput = () => {
+    setIsValid(false);
   };
 
   return (
@@ -46,12 +52,14 @@ const AppProvider = ({ children }) => {
         ...state,
         isModalOpen,
         modalType,
+        isValid,
         add,
         remove,
         spend,
         edit,
         openModal,
         closeModal,
+        notifyBadInput,
       }}
     >
       {children}

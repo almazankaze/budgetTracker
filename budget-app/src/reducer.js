@@ -1,11 +1,16 @@
+import currency from "currency.js";
+import { unstable_concurrentAct } from "react-dom/test-utils";
+
 const reducer = (state, action) => {
   if (action.type === "ADD") {
+    const startAmount = currency(action.payload.amount).value;
+
     const newBudget = {
       id: 5,
       name: action.payload.name,
-      amount: action.payload.amount,
+      amount: startAmount,
       spent: 0.0,
-      saved: action.payload.amount,
+      saved: startAmount,
       over: 0.0,
       barColor: "teal",
     };
@@ -27,12 +32,13 @@ const reducer = (state, action) => {
   if (action.type === "SPEND") {
     let tempBudgets = state.budgets.map((item) => {
       if (item.id === action.payload.id) {
+        const spent = currency(item.spent).add(action.payload.spent).value;
+        const saved = currency(item.amount).subtract(spent).value;
         return {
           ...item,
-          spent: item.spent + action.payload.spent,
-          saved: item.amount - (item.spent + action.payload.spent),
-          barColor:
-            item.spent + action.payload.spent > item.amount ? "red" : "teal",
+          spent: spent,
+          saved: saved,
+          barColor: item.spent > item.amount ? "red" : "teal",
         };
       }
       return item;
@@ -46,9 +52,8 @@ const reducer = (state, action) => {
         ? {
             ...item,
             name: action.payload.name,
-            amount: action.payload.amount,
-            spent: 0,
-            saved: action.payload.amount,
+            amount: currency(action.payload.amount).value,
+            saved: currency(action.payload.amount).subtract(item.spent).value,
           }
         : item;
     });
