@@ -20,7 +20,7 @@
   background: #fff;
   border-radius: 0.25rem;
   width: 90vw;
-  height: 30vh;
+  height: 38vh;
   max-width: 620px;
   position: relative;
 }
@@ -82,7 +82,11 @@
   background: hsl(205, 78%, 60%);
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 375px) {
+  .modal-container {
+    height: 30vh;
+  }
+
   .form-remove {
     position: fixed;
     margin: 0;
