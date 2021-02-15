@@ -1,5 +1,5 @@
 import React from "react";
-import AddBudget from "./AddBudget";
+import ResetButton from "./ResetButton";
 import "./Header.css";
 
 const Header = () => {
@@ -8,6 +8,7 @@ const Header = () => {
       <div className="logo">
         <h2>Budget</h2>
       </div>
+      <ResetButton />
     </header>
   );
 };

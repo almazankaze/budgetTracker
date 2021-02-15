@@ -4,8 +4,17 @@ import reducer from "./reducer";
 
 const AppContext = React.createContext();
 
+const getLocalStorage = () => {
+  let list = localStorage.getItem("budgets");
+  if (list) {
+    return (list = JSON.parse(localStorage.getItem("budgets")));
+  } else {
+    return [];
+  }
+};
+
 const initialState = {
-  budgets: budgets,
+  budgets: getLocalStorage(),
   currentBudget: {},
   total: 0,
 };
@@ -32,6 +41,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "EDIT", payload: { id, name, amount } });
   };
 
+  const reset = () => {
+    dispatch({ type: "RESET" });
+  };
+
   const openModal = (type, id) => {
     setIsModalOpen(true);
     setModalType(type);
@@ -46,6 +59,10 @@ const AppProvider = ({ children }) => {
     setIsValid(false);
   };
 
+  useEffect(() => {
+    localStorage.setItem("budgets", JSON.stringify(state.budgets));
+  }, [state.budgets]);
+
   return (
     <AppContext.Provider
       value={{
@@ -57,6 +74,7 @@ const AppProvider = ({ children }) => {
         remove,
         spend,
         edit,
+        reset,
         openModal,
         closeModal,
         notifyBadInput,

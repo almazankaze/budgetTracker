@@ -5,6 +5,7 @@ import { useGlobalContext } from "../context";
 
 const BudgetList = () => {
   const { budgets } = useGlobalContext();
+
   return (
     <main className="budget-container">
       <div className="budgets">

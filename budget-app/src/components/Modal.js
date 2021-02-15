@@ -12,6 +12,7 @@ const Modal = () => {
     edit,
     remove,
     spend,
+    reset,
     modalType,
     currentBudget,
     isValid,
@@ -29,6 +30,11 @@ const Modal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (modalType === "reset") {
+      reset();
+      cleanUp();
+    }
 
     if (modalType === "remove") {
       remove(currentBudget.id);
@@ -54,26 +60,44 @@ const Modal = () => {
     }
 
     if (modalType === "edit") {
-      if (!name) {
-        setName(currentBudget.name);
+      if (!name && !amount) {
+        cleanUp();
+        return;
+      }
+
+      if (!name && !isNaN(amount)) {
+        edit(currentBudget.id, currentBudget.name, amount);
+        cleanUp();
+        return;
       }
 
       if (!amount) {
-        setAmount(currentBudget.amount);
+        edit(currentBudget.id, name, currentBudget.amount);
+        cleanUp();
+        return;
       }
 
       if (name && amount && !isNaN(amount)) {
         edit(currentBudget.id, name, amount);
         cleanUp();
-      } else {
-        notifyBadInput();
+        return;
       }
+      notifyBadInput();
     }
   };
 
   let form;
 
-  if (modalType === "remove") {
+  if (modalType === "reset") {
+    form = (
+      <div className="form-remove">
+        <h4>You are about to reset all budgets to default.' Are you sure?</h4>
+        <button className="btn modal-btn" type="submit" onClick={handleSubmit}>
+          yes
+        </button>
+      </div>
+    );
+  } else if (modalType === "remove") {
     form = (
       <div className="form-remove">
         <h4>
@@ -107,6 +131,35 @@ const Modal = () => {
         </button>
       </div>
     );
+  } else if (modalType === "add") {
+    form = (
+      <div className="form-control">
+        <span
+          className={`${
+            isValid ? "error-message" : "error-message show-error"
+          }`}
+        >
+          one or both fields are invalid
+        </span>
+        <input
+          type="text"
+          className="input-style"
+          placeholder={"name for budget"}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          className="input-style"
+          placeholder={"initial amount"}
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button className="btn modal-btn" type="submit" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
+    );
   } else {
     form = (
       <div className="form-control">
@@ -127,7 +180,7 @@ const Modal = () => {
         <input
           type="text"
           className="input-style"
-          placeholder={currentBudget.amount || "starting amount"}
+          placeholder={currentBudget.amount || "initial amount"}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />

@@ -1,12 +1,11 @@
 import currency from "currency.js";
-import { unstable_concurrentAct } from "react-dom/test-utils";
 
 const reducer = (state, action) => {
   if (action.type === "ADD") {
     const startAmount = currency(action.payload.amount).value;
 
     const newBudget = {
-      id: 5,
+      id: new Date().getTime().toString(),
       name: action.payload.name,
       amount: startAmount,
       spent: 0.0,
@@ -59,6 +58,25 @@ const reducer = (state, action) => {
     });
 
     return { ...state, budgets: tmpBudgets };
+  }
+
+  if (action.type === "RESET") {
+    if (state.budgets) {
+      return {
+        ...state,
+        budget: {},
+        total: 0,
+        budgets: state.budgets.map((item) => {
+          return {
+            ...item,
+            spent: 0,
+            saved: item.amount,
+            over: 0,
+            barColor: "teal",
+          };
+        }),
+      };
+    }
   }
 
   if (action.type === "EDITING") {
