@@ -20,7 +20,7 @@
   background: #fff;
   border-radius: 0.25rem;
   width: 90vw;
-  height: 38vh;
+  height: 40vh;
   max-width: 620px;
   position: relative;
 }
@@ -46,7 +46,7 @@
 .form-control {
   display: flex;
   flex-direction: column;
-  margin: 4rem 2rem;
+  margin: 3.5rem 2rem;
 }
 
 .input-style {
@@ -93,9 +93,5 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-
-  .form-control {
-    margin: 4rem;
   }
 }
